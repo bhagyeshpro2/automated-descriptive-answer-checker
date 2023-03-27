@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Question</title>
+  <style media="screen">
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    label, input, textarea {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"], textarea, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    button[type="submit"], a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    button[type="submit"]:hover, a:hover {
+      background-color: #3e8e41;
+    }
+
+    .success-message {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 480px) {
+      form {
+        max-width: 100%;
+      }
+
+      input[type="text"], textarea, input[type="number"] {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Add Question</h1>
+  <form action="/teacher/add-question" method="POST">
+    <label for="question">Question:</label>
+    <input type="text" name="question" required>
+    <label for="answer">Answer:</label>
+    <textarea name="answer" required></textarea>
+    <label for="minScore">Minimum Score:</label>
+    <input type="number" name="minScore" required>
+    <label for="maxScore">Maximum Score:</label>
+    <input type="number" name="maxScore" required>
+    <button type="submit" id="add-question-btn">Add Question</button>
+    <a href="/teacher/view-questions">View Questions</a>
+  </form>
+
+  <script>
+    const form = document.querySelector('form');
+    const addQuestionBtn = document.querySelector('#add-question-btn');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Make AJAX request to add question
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/teacher/add-question');
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          // Show success message
+          const successMessage = document.createElement('div');
+          successMessage.classList.add('success-message');
+          successMessage.textContent = 'Question successfully added!';
+          form.insertBefore(successMessage, addQuestionBtn);
+
+          // Remove success message after 3 seconds
+          setTimeout(() => {
+            successMessage.remove();
+          }, 3000);
+        } else {
+          console.error(xhr.statusText);
+        }
+      };
+      xhr.onerror = function() {
+        console.error(xhr.statusText);
+      };
+      const formData = new FormData(form);
+      const question = {
+        question: formData.get('question'),
+        answer: formData.get('answer'),
+        minScore: formData.get('minScore'),
+        maxScore: formData.get('maxScore')
+      };
+      xhr.send(JSON.stringify(question));
+    });
+  </script>
+</body>
+</html>
