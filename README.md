@@ -9,12 +9,10 @@ $ cd descriptive-answer-checker
 $ npm install
 ```
 
-```
-
 Start the server.
 
-
+```bash
 $ npm start
-
+```
 
 Navigate to [`http://localhost:3000`](http://localhost:3000).
