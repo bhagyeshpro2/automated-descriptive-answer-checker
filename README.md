@@ -17,6 +17,7 @@ environment variables:
 
 ```
 OPENAI_API_KEY=__INSERT_API_KEY_HERE__
+```
 
 Start the server.
 
