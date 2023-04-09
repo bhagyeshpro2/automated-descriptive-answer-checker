@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Add Question</title>
+  <%- include('../partials/header'); -%>
   <style media="screen">
     form {
       max-width: 600px;
@@ -27,7 +24,7 @@
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    button[type="submit"], a {
+    button[type="submit"] {
       display: inline-block;
       margin-top: 20px;
       padding: 10px 20px;
@@ -40,7 +37,7 @@
       text-decoration: none;
     }
 
-    button[type="submit"]:hover, a:hover {
+    button[type="submit"]:hover:hover {
       background-color: #3e8e41;
     }
 
@@ -65,7 +62,7 @@
   </style>
 </head>
 <body>
-  <h1>Add Question</h1>
+  <!-- <h1>Add Question</h1> -->
   <form action="/teacher/add-question" method="POST">
     <label for="question">Question:</label>
     <input type="text" name="question" required>
@@ -76,7 +73,7 @@
     <label for="maxScore">Maximum Score:</label>
     <input type="number" name="maxScore" required>
     <button type="submit" id="add-question-btn">Add Question</button>
-    <a href="/teacher/view-questions">View Questions</a>
+    <!-- <a id="view-question" href="/teacher/view-question">View Questions</a> -->
   </form>
 
   <script>

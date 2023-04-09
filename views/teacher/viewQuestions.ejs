@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
-  <title>View Questions</title>
+  <title>View Questions</title> -->
+  <%- include('../partials/header'); -%>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -33,9 +34,9 @@
   </style>
 </head>
 <body>
-  <header>
+  <!-- <header>
     <h1>View Questions</h1>
-  </header>
+  </header> -->
 
   <% questions.forEach((question, index) => { %>
     <div class="question-answer">
@@ -43,5 +44,11 @@
       <div class="answer"><%= question.answer %></div>
     </div>
   <% }); %>
+
+  <form action="/teacher/publish-results" method="POST"> <!-- Add this form -->
+   <button type="submit">Publish Results</button>
+ </form>
+
+    <%- include('../partials/footer'); -%>
 </body>
 </html>

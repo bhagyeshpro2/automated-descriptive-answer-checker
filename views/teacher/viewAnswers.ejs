@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Answers</title>
+</head>
+<body>
+  <h1>Submitted Answers</h1>
+  <table>
+    <tr>
+      <th>Student Name</th>
+      <th>Question</th>
+      <th>Student Answer</th>
+      <th>Score</th>
+    </tr>
+    <% answers.forEach(answer => { %>
+      <tr>
+        <td><%= answer.studentName %></td>
+        <td><%= answer.questionId.question %></td>
+        <td><%= answer.studentAnswer %></td>
+        <td><%= answer.score %></td>
+      </tr>
+    <% }); %>
+  </table>
+</body>
+</html>

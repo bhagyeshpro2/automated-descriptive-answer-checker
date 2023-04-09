@@ -1,15 +1,13 @@
+dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 import dotenv from 'dotenv';
 import teacherRouter from './routes/teacher.js';
 import studentRouter from './routes/student.js';
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const dotenv = require('dotenv');
+import uploadRouter from './routes/uploads.js';
 
-dotenv.config();
 const app = express();
 
 // Connect to MongoDB
@@ -20,21 +18,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
-// Routes
-// app.use('/teacher', require('./routes/teacher'));
-// app.use('/student', require('./routes/student'));
 app.use('/teacher', teacherRouter);
 app.use('/student', studentRouter);
+app.use('/uploads', uploadRouter);
 
 
 app.get('/', function(req,res) {
   res.render('home');
 });
 
-
-
-
-
+app.get('/registration', function(req,res) {
+  res.render('auth/register');
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;

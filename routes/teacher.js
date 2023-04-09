@@ -1,8 +1,10 @@
 import express from 'express';
 import { Router } from 'express';
 import Question from '../models/Question.js';
+import Score from '../models/Score.js';
+
 const router = express.Router();
-// Add routes for teacher portal here: add question, view questions, etc.
+
 // Add question
 router.get('/add-question', (req, res) => {
   res.render('teacher/addQuestion');
@@ -21,5 +23,17 @@ router.get('/view-questions', async (req, res) => {
   res.render('teacher/viewQuestions', { questions });
 });
 
-// module.exports = router;
+// View submitted answers
+router.get('/view-answers', async (req, res) => {
+  const answers = await Score.find().populate('questionId');
+  // console.log(answers);
+  res.render('teacher/viewAnswers', { answers });
+});
+
+// Publish Result
+router.post('/publish-results', async (req, res) => {
+  await Score.updateMany({}, { $set: { resultsPublished: true } });
+  res.redirect('/teacher/view-questions');
+});
+
 export default router;
