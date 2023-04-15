@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import dotenv from 'dotenv';
+import session from 'express-session';
+import flash from 'connect-flash';
+import authRouter from './routes/auth.js';
+import passport from './config/passport.js';
 import teacherRouter from './routes/teacher.js';
 import studentRouter from './routes/student.js';
 import uploadRouter from './routes/uploads.js';
@@ -16,7 +20,17 @@ mongoose.connect("mongodb://127.0.0.1:27017/answerCheckerDB").then(console.log("
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'abcd',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 app.set('view engine', 'ejs');
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRouter);
 
 app.use('/teacher', teacherRouter);
 app.use('/student', studentRouter);
@@ -27,9 +41,9 @@ app.get('/', function(req,res) {
   res.render('home');
 });
 
-app.get('/registration', function(req,res) {
-  res.render('auth/register');
-});
+// app.get('/registration', function(req,res) {
+//   res.render('auth/register');
+// });
 
 // Start the server
 const PORT = process.env.PORT || 3000;

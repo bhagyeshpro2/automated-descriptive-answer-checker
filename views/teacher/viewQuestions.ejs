@@ -34,9 +34,6 @@
   </style>
 </head>
 <body>
-  <!-- <header>
-    <h1>View Questions</h1>
-  </header> -->
 
   <% questions.forEach((question, index) => { %>
     <div class="question-answer">
@@ -45,7 +42,7 @@
     </div>
   <% }); %>
 
-  <form action="/teacher/publish-results" method="POST"> <!-- Add this form -->
+  <form action="/teacher/publish-results" method="POST">
    <button type="submit">Publish Results</button>
  </form>
 

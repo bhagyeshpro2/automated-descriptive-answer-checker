@@ -2,15 +2,32 @@ import express from 'express';
 import { Router } from 'express';
 import Question from '../models/Question.js';
 import Score from '../models/Score.js';
+import User from '../models/User.js';
 import openai from 'openai';
 import { evaluateAnswer } from '../utils.js';
 openai.apiKey = process.env.OPENAI_API_KEY;
 
 const router = express.Router();
 
+//Middleware
+const isAuthenticated = (role) => {
+return (req, res, next) => {
+if (req.isAuthenticated() && req.user.role === role) {
+return next();
+}
+res.redirect('/auth/login');
+};
+};
+
+// Student's Home Page
+router.get('/home', isAuthenticated('student'), async (req, res) => {
+
+  // console.log(studentName);
+  res.render('student/homePage');
+});
 
 // Take test
-router.get('/take-test', async (req, res) => {
+router.get('/take-test', isAuthenticated('student'), async (req, res) => {
   const questions = await Question.find();
   res.render('student/takeTest', { questions });
 });
@@ -38,17 +55,16 @@ const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
     index++;
 }
   res.redirect(`/student/test-submitted?studentName=${studentName}`);
-  // res.redirect(`/student/view-scorecard?studentName=${studentName}`);
 });
 
 // Test submitted success page
-router.get('/test-submitted', async (req, res) => {
+router.get('/test-submitted', isAuthenticated('student'), async (req, res) => {
   const studentName = req.query.studentName;
   res.render('student/successPage', { studentName });
 });
 
 // View scorecard
-router.get('/view-scorecard', async (req, res) => {
+router.get('/view-scorecard', isAuthenticated('student'), async (req, res) => {
   const studentName = req.query.studentName;
   const scores = await Score.find({ studentName, resultsPublished: true }).populate('questionId');
   res.render('student/viewScorecard', { studentName, scores, pageName: "View Score Card" });

@@ -1,8 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>View Answers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    table {
+      margin: 0 auto;
+      width: 80%;
+      border-collapse: collapse;
+      border: 2px solid #333;
+      background-color: #fff;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
+
 <body>
   <h1>Submitted Answers</h1>
   <table>
@@ -11,15 +48,13 @@
       <th>Question</th>
       <th>Student Answer</th>
       <th>Score</th>
-    </tr>
-    <% answers.forEach(answer => { %>
-      <tr>
-        <td><%= answer.studentName %></td>
-        <td><%= answer.questionId.question %></td>
-        <td><%= answer.studentAnswer %></td>
-        <td><%= answer.score %></td>
-      </tr>
-    <% }); %>
+    </tr> <% answers.forEach(answer => { %> <tr>
+      <td><%= answer.studentName %></td>
+      <td><%= answer.questionId.question %></td>
+      <td><%= answer.studentAnswer %></td>
+      <td><%= answer.score %></td>
+    </tr> <% }); %>
   </table>
 </body>
+
 </html>

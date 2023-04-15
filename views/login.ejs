@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    form {
+      width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type=email],
+    input[type=password] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      font-size: 16px;
+    }
+
+    input[type=submit] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+    }
+
+    input[type=submit]:hover {
+      background-color: #3e8e41;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #4CAF50;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      padding: 10px;
+    }
+
+    a:hover {
+      color: #3e8e41;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Login</h1>
+  <form action="/auth/login" method="post"> <label for="email">Email:</label> <input type="email" name="email" required> <br> <label for="password">Password:</label> <input type="password" name="password" required> <br> <input type="submit"
+      value="Login"> </form> <a href="/auth/register">Register</a> <br> <a href="/auth/google">Login with Google</a>
+</body>
+
+</html>
