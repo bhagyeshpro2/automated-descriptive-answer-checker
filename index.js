@@ -15,7 +15,7 @@ import uploadRouter from './routes/uploads.js';
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/answerCheckerDB").then(console.log("Succesfully connected to the database"));
+mongoose.connect("mongodb+srv://bhagyesh:n5qhpM8miA9Kexsb@cluster0.lp1p4ad.mongodb.net/answerDB").then(console.log("Succesfully connected to the database"));
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
