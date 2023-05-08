@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Register</title>
@@ -45,7 +44,8 @@
       font-size: 16px;
     }
 
-    input[type="submit"] {
+    input[type="submit"],
+    .button {
       background-color: #4CAF50;
       color: #fff;
       border: none;
@@ -53,16 +53,42 @@
       border-radius: 3px;
       font-size: 16px;
       cursor: pointer;
+      display: inline-block;
     }
 
-    input[type="submit"]:hover {
+    input[type="submit"]:hover,
+    .button:hover {
       background-color: #666;
+    }
+
+    .button-google {
+      background-color: #fff;
+      color: #666;
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 3px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button-google:hover {
+      background-color: #eee;
+    }
+
+    .button-google img {
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
     }
 
     a {
       display: block;
       text-align: center;
-      margin-top: 20px;
       color: #666;
       text-decoration: none;
     }
@@ -72,14 +98,25 @@
     }
   </style>
 </head>
-
 <body>
   <h1>Register</h1>
-  <form action="/auth/register" method="post"> <label for="username">Username:</label> <input type="text" name="username" required> <label for="email">Email:</label> <input type="email" name="email" required> <label for="password">Password:</label>
-    <input type="password" name="password" required> <label for="role">Role:</label> <select name="role">
+  <form action="/auth/register" method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" required>
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+    <label for="password">Password:</label>
+    <input type="password" name="password" required>
+    <label for="role">Role:</label>
+    <select name="role">
       <option value="teacher">Teacher</option>
       <option value="student">Student</option>
-    </select> <input type="submit" value="Register"> </form> <a href="/auth/login">Login</a> <a href="/auth/google">Login with Google</a>
+    </select>
+    <input type="submit" value="Register">
+  </form>
+  <div class="button-container">
+    <a href="/auth/login" class="button">Login</a>
+    <a href="/auth/google" class="button-google"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google icon"> Continue with Google</a>
+  </div>
 </body>
-
 </html>

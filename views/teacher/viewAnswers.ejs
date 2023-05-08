@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>View Answers</title>
+<%- include('../partials/header'); -%>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,12 +7,12 @@
 
     h1 {
       text-align: center;
-      margin-top: 50px;
+      margin-top: 30px;
     }
 
     table {
       margin: 0 auto;
-      width: 80%;
+      width: 70%;
       border-collapse: collapse;
       border: 2px solid #333;
       background-color: #fff;
@@ -24,7 +20,7 @@
 
     th,
     td {
-      padding: 10px;
+      padding: 20px;
       text-align: left;
       border-bottom: 1px solid #ccc;
     }
@@ -37,24 +33,42 @@
     tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
+    .publish-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .publish-button:hover {
+      background-color: #3e8e41;
+    }
+
   </style>
 </head>
 
 <body>
-  <h1>Submitted Answers</h1>
+  <h1>Students Responses</h1>
   <table>
     <tr>
       <th>Student Name</th>
-      <th>Question</th>
-      <th>Student Answer</th>
-      <th>Score</th>
-    </tr> <% answers.forEach(answer => { %> <tr>
-      <td><%= answer.studentName %></td>
-      <td><%= answer.questionId.question %></td>
-      <td><%= answer.studentAnswer %></td>
-      <td><%= answer.score %></td>
-    </tr> <% }); %>
+      <th>View Student's Answer Submissions</th>
+    </tr>
+    <% submissions.forEach(studentName => { %>
+      <tr>
+        <td><%= studentName %></td>
+        <td><a href="/teacher/view-student-answers?studentName=<%= studentName %>">View Answer Submission</a></td>
+      </tr>
+    <% }) %>
   </table>
-</body>
 
-</html>
+    <form action="/teacher/publish-results" method="POST">
+     <button class="publish-button" type="submit">Publish Results</button>
+   </form>
+    <%- include('../partials/footer'); -%>

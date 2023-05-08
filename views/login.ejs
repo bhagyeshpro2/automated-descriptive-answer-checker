@@ -59,6 +59,31 @@
       background-color: #3e8e41;
     }
 
+    .button-google {
+      background-color: #fff;
+      color: #666;
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 3px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button-google:hover {
+      background-color: #eee;
+    }
+
+    .button-google img {
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
     a {
       display: block;
       text-align: center;
@@ -77,8 +102,18 @@
 
 <body>
   <h1>Login</h1>
-  <form action="/auth/login" method="post"> <label for="email">Email:</label> <input type="email" name="email" required> <br> <label for="password">Password:</label> <input type="password" name="password" required> <br> <input type="submit"
-      value="Login"> </form> <a href="/auth/register">Register</a> <br> <a href="/auth/google">Login with Google</a>
+  <form action="/auth/login" method="post">
+    <label for="email">Email:</label>
+    <input type="email" name="email" required> <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" required>
+    <br>
+    <input type="submit" value="Login">
+  </form>
+  <!-- <a href="/auth/register">Register</a> <br> <a href="/auth/google">Continue with Google</a> -->
+  <div class="button-container">
+    <a href="/auth/register" class="button">Register</a>
+    <a href="/auth/google" class="button-google"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google icon"> Continue with Google</a>
+  </div>
 </body>
-
 </html>

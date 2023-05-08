@@ -6,7 +6,30 @@
   <title> pageName </title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="headerStyles.css">
+  <!-- <link rel="stylesheet" href="headerStyles.css"> -->
+  <style media="screen">
+    .logout a {
+      color: #FF0000;
+      font-weight: bold;
+    }
+    .footer-padding {
+      padding-bottom: 60px;
+    }
+
+    .footer {
+      position: absolute;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #1abc9c;
+    }
+
+    .footer p {
+      margin-top: 25px;
+      font-size: 12px;
+      color: #fff;
+  </style>
 </head>
 
 <body>
@@ -17,8 +40,14 @@
       </div>
         <ul class="nav navbar-nav navbar-right">
           <li id="home"><a href="/teacher/view-questions">VIEW QUESTIONS</a></li>
-          <li id="about"><a href="/teacher/view-answers">VIEW ANSWERS</a></li>
+          <li id="about"><a href="/teacher/view-answers">VIEW RESPONSES</a></li>
           <li id="contact"><a href="/teacher/add-question">ADD QUESTION</a></li>
+          <li class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">LOGOUT<span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               <li class="logout" id="log"><a href="/auth/logout">Log Out</a></li>
+             </ul>
+          </li>
         </ul>
     </div>
   </nav>

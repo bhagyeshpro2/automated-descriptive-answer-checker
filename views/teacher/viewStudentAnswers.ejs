@@ -1,0 +1,60 @@
+<%- include('../partials/header'); -%>
+  <title><%= studentName %>'s Answer Submissions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    table {
+      margin: 0 auto;
+      width: 80%;
+      border-collapse: collapse;
+      border: 2px solid #333;
+      background-color: #fff;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+  <h1><%= studentName %>'s Answer Submissions</h1>
+  <table>
+    <tr>
+      <th>Question</th>
+      <th>Student Answer</th>
+      <th>Score</th>
+      <th>Results Published</th>
+    </tr>
+    <% submissions.forEach(submission => { %>
+      <tr>
+        <td><%= submission.questionId.question %></td>
+        <td><%= submission.studentAnswer %></td>
+        <td><%= submission.score %></td>
+        <td><%= submission.resultsPublished %></td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+
+</html>

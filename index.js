@@ -30,8 +30,8 @@ app.set('view engine', 'ejs');
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/auth', authRouter);
 
+app.use('/auth', authRouter);
 app.use('/teacher', teacherRouter);
 app.use('/student', studentRouter);
 app.use('/uploads', uploadRouter);
@@ -41,9 +41,6 @@ app.get('/', function(req,res) {
   res.render('home');
 });
 
-// app.get('/registration', function(req,res) {
-//   res.render('auth/register');
-// });
 
 // Start the server
 const PORT = process.env.PORT || 3000;

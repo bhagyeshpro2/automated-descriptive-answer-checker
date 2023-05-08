@@ -21,9 +21,8 @@ res.redirect('/auth/login');
 
 // Student's Home Page
 router.get('/home', isAuthenticated('student'), async (req, res) => {
-
-  // console.log(studentName);
-  res.render('student/homePage');
+  const studentName = req.user.username;
+  res.render('student/homePage', {studentName});
 });
 
 // Take test
@@ -32,18 +31,15 @@ router.get('/take-test', isAuthenticated('student'), async (req, res) => {
   res.render('student/takeTest', { questions });
 });
 
-
 //route to submit the test answers and evaluate them
-
 router.post('/submit-test', async (req, res) => {
-const studentName = req.body.name;
-const questionId = req.body.questionId;
-const studentAnswers = req.body.answer;
+const studentName = req.user.username; // Use the authenticated user's username
+const questionId = req.body.questionId; // array
+const studentAnswers = req.body.answer; // array
 
-let index = 0;
+let index = 0; // used to iterate the array
 for (const studentAnswer of studentAnswers) {
 const {question, answer, minScore, maxScore} = await Question.findById(questionId[index]).exec();
-  console.log(studentAnswer);
 const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
     const newScore = new Score({
       studentName: studentName,
@@ -68,8 +64,6 @@ router.get('/view-scorecard', isAuthenticated('student'), async (req, res) => {
   const studentName = req.query.studentName;
   const scores = await Score.find({ studentName, resultsPublished: true }).populate('questionId');
   res.render('student/viewScorecard', { studentName, scores, pageName: "View Score Card" });
-
 });
-
 
 export default router;
