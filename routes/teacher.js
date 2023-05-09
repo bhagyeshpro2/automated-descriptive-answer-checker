@@ -2,8 +2,57 @@ import express from 'express';
 import { Router } from 'express';
 import Question from '../models/Question.js';
 import Score from '../models/Score.js';
-
+import openai from 'openai';
+import path from 'path';
+import { ImageAnnotatorClient } from '@google-cloud/vision';
+import { evaluateAnswer } from '../utils.js';
 const router = express.Router();
+
+import multer from 'multer';
+openai.apiKey = process.env.OPENAI_API_KEY;
+
+
+// Configure multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/submit-test', upload.array('answerSheet'), async (req, res) => {
+  const studentName = req.body.name;
+  const questionId = req.body.questionId;
+
+  // Extract text from the uploaded scanned answer sheets
+  const client = new ImageAnnotatorClient();
+  const studentAnswers = await Promise.all((req.files || []).map(async (file) => {
+    const [result] = await client.textDetection(file.path);
+    const detections = result.textAnnotations;
+    return detections[0].description;
+  }));
+
+  let index = 0;
+  for (const studentAnswer of studentAnswers) {
+    const {question, answer, minScore, maxScore} = await Question.findById(questionId[index]).exec();
+    const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
+    const newScore = new Score({
+      studentName: studentName,
+      questionId: questionId[index],
+      studentAnswer: studentAnswer,
+      score: score,
+    });
+    await newScore.save();
+    index++;
+  }
+
+  res.redirect('/teacher/view-answers');
+
+});
 
 //Middleware
 const isAuthenticated = (role) => {
@@ -71,6 +120,13 @@ router.post('/publish-results', isAuthenticated('teacher'), async (req, res) => 
     res.status(500).send('Error publishing results');
   }
 });
+
+// Upload Answer Sheet
+router.get('/upload-answers', async (req, res) => {
+  const questions = await Question.find();
+  res.render('teacher/uploadAnswers', { questions });
+});
+
 
 // delete question
 router.post('/delete-question', isAuthenticated('teacher'), async (req, res) => {

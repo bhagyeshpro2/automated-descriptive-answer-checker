@@ -30,39 +30,6 @@ router.get('/upload-answers', async (req, res) => {
   res.render('teacher/uploadAnswers', { questions });
 });
 
-//route to submit the test answers and evaluate them
-// router.post('/submit-test', upload.array('answerSheet'), async (req, res) => {
-// const studentName = req.body.name;
-// const questionId = req.body.questionId;
-//
-// // Extract text from the uploaded scanned answer sheets
-// const client = new ImageAnnotatorClient();
-//
-// const studentAnswers = await Promise.all((req.files || []).map(async (file) => {
-//   const [result] = await client.textDetection(file.path);
-//   const detections = result.textAnnotations;
-//   return detections[0].description;
-// }));
-//
-// let index = 0;
-// for (const studentAnswer of studentAnswers) {
-// const {question, answer, minScore, maxScore} = await Question.findById(questionId[index]).exec();
-//   console.log(studentAnswer);
-// const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
-//     const newScore = new Score({
-//       studentName: studentName,
-//       questionId: questionId[index],
-//       studentAnswer: studentAnswer,
-//       score: score,
-//     });
-//     await newScore.save();
-//     index++;
-// }
-// res.redirect('/teacher/view-answers');
-// });
-
-/////////////////////////////////////////////////////////////////////////////////
-
 router.post('/submit-test', upload.array('answerSheet'), async (req, res) => {
   const studentName = req.body.name;
   const questionId = req.body.questionId;
@@ -89,14 +56,9 @@ router.post('/submit-test', upload.array('answerSheet'), async (req, res) => {
     index++;
   }
 
-  // Find all the scores for the current student and send them to the success page
-  // const scores = await Score.find({ studentName }).populate('questionId');
-  // res.render('teacher/viewAnswers', { studentName, scores });
   res.redirect('/teacher/view-answers');
 
 });
-
-//////////////////////////////////////////////////////////////////////////////////
 
 // View scorecard
 router.get('/view-scorecard', async (req, res) => {
