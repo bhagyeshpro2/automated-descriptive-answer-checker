@@ -45,6 +45,9 @@
       <th>Student Answer</th>
       <th>Score</th>
       <th>Results Published</th>
+      <th>
+         Edit Score
+      </th>
     </tr>
     <% submissions.forEach(submission => { %>
       <tr>
@@ -52,9 +55,33 @@
         <td><%= submission.studentAnswer %></td>
         <td><%= submission.score %></td>
         <td><%= submission.resultsPublished %></td>
+        <td>
+          <button onclick="editScore('<%= submission._id %>')">Edit</button>
+        </td>
       </tr>
     <% }) %>
   </table>
+
+<script>
+function editScore(submissionId) {
+  const newScore = prompt('Enter new score:');
+  if (newScore !== null) {
+    fetch('/teacher/update-score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ submissionId, newScore }),
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .then(location.reload())
+    .catch(error => console.error(error));
+  }
+
+}
+</script>
+
 </body>
 
 </html>

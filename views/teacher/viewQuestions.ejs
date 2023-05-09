@@ -33,6 +33,10 @@
     <div class="question-answer">
       <div class="question"><%= index + 1 %>. <%= question.question %> <%= question.maxScore%></div>
       <div class="answer"><%= question.answer %></div>
+      <form action="/teacher/delete-question" method="POST">
+      <input type="hidden" name="questionId" value="<%= question._id %>">
+      <button type="submit">Delete</button>
+    </form>
     </div>
   <% }); %>
 

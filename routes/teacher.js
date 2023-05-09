@@ -72,27 +72,28 @@ router.post('/publish-results', isAuthenticated('teacher'), async (req, res) => 
   }
 });
 
-////////////////////////////////////////////////////////////////////////////////
+// delete question
+router.post('/delete-question', isAuthenticated('teacher'), async (req, res) => {
+  const questionId = req.body.questionId;
+  await Question.findByIdAndDelete(questionId); // delete question from database
+  await Score.deleteMany({ questionId }); // delete scores related to the question
+  res.redirect('/teacher/view-questions');
+});
 
-router.get('/evaluate-answers', isAuthenticated('teacher'), async (req, res) => {
+// update scores
+// Update score
+router.post('/update-score', isAuthenticated('teacher'), async (req, res) => {
+  const { submissionId, newScore } = req.body;
   try {
-    const scores = await Score.find({ resultsPublished: false }).populate('questionId');
-    res.render('teacher/evaluateAnswers', { scores });
+    const submission = await Score.findById(submissionId);
+    submission.score = newScore;
+    await submission.save();
+    res.status(200).send({ message: 'Score updated successfully' });
   } catch (error) {
-    console.log('Error fetching scores:', error.message);
-    res.status(500).send('Error fetching scores');
+    console.error(error);
+    res.status(500).send({ message: 'Failed to update score' });
   }
 });
 
-router.post('/evaluate-answers', isAuthenticated('teacher'), async (req, res) => {
-  try {
-    const scoreIds = req.body.scoreIds;
-    const scores = await Score.updateMany({_id: {$in: scoreIds}}, { $set: { resultsPublished: true } });
-    res.redirect('/teacher/view-answers');
-  } catch (error) {
-    console.log('Error publishing results:', error.message);
-    res.status(500).send('Error publishing results');
-  }
-});
 
 export default router;
