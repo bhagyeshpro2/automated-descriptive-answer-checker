@@ -4,7 +4,7 @@
 To run this app, clone the repository and install dependencies:
 
 ```bash
-$ git clone https://github.com/CoderBhagyesh/descriptive-answer-checker.git
+$ git clone https://github.com/bhagyeshpro2/automated-descriptive-answer-checker.git
 $ cd descriptive-answer-checker
 $ npm install
 ```
