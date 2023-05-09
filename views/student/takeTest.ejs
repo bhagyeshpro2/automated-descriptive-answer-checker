@@ -71,9 +71,6 @@
 <body>
   <h1>Take Test</h1>
   <form action="/student/submit-test" method="POST">
-    <!-- <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required>
-    <br> -->
     <% questions.forEach(question => { %>
       <input type="hidden" name="questionId" value="<%= question._id %>">
       <label for="answer">Question: <%= question.question %></label>

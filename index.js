@@ -15,8 +15,10 @@ import uploadRouter from './routes/uploads.js';
 const app = express();
 
 // Connect to MongoDB
-// mongoose.connect("mongodb+srv://bhagyesh:n5qhpM8miA9Kexsb@cluster0.lp1p4ad.mongodb.net/answerDB").then(console.log("Succesfully connected to the database"));
+//local db connection string
 mongoose.connect("mongodb://127.0.0.1:27017/answerCheckerDB").then(console.log("Succesfully connected to the database"));
+// mongodb atlas connection str
+  // mongoose.connect("mongodb+srv://admin:Test123@cluster0.jn8bi7p.mongodb.net/answerCheckerDB").then(console.log("Succesfully connected to the database"));
 
 
 // Middleware

@@ -33,13 +33,14 @@ router.get('/take-test', isAuthenticated('student'), async (req, res) => {
 
 //route to submit the test answers and evaluate them
 router.post('/submit-test', async (req, res) => {
+  console.log(req.user.username);
 const studentName = req.user.username; // Use the authenticated user's username
 const questionId = req.body.questionId; // array
 const studentAnswers = req.body.answer; // array
-
 let index = 0; // used to iterate the array
 for (const studentAnswer of studentAnswers) {
 const {question, answer, minScore, maxScore} = await Question.findById(questionId[index]).exec();
+
 const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
     const newScore = new Score({
       studentName: studentName,
