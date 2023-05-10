@@ -11,6 +11,9 @@
       border-radius: 5px;
       padding: 20px;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .question {
@@ -25,18 +28,28 @@
       color: #666;
       margin-left: 20px;
     }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: red;
+    }
   </style>
 </head>
 <body>
 
   <% questions.forEach((question, index) => { %>
     <div class="question-answer">
-      <div class="question"><%= index + 1 %>. <%= question.question %> <%= question.maxScore%></div>
-      <div class="answer"><%= question.answer %></div>
-      <form action="/teacher/delete-question" method="POST">
-      <input type="hidden" name="questionId" value="<%= question._id %>">
-      <button type="submit">Delete</button>
-    </form>
+      <div>
+        <div class="question"><%= index + 1 %>. <%= question.question %> <%= question.maxScore%></div>
+        <div class="answer"><%= question.answer %></div>
+      </div>
+      <form action="/teacher/delete-question" method="POST" onsubmit="return confirm('Are you sure you want to delete this question?');">
+        <input type="hidden" name="questionId" value="<%= question._id %>">
+        <button class="delete-btn" type="submit"><i class="fas fa-trash-alt"></i></button>
+      </form>
     </div>
   <% }); %>
 

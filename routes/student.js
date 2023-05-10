@@ -11,18 +11,18 @@ const router = express.Router();
 
 //Middleware
 const isAuthenticated = (role) => {
-return (req, res, next) => {
-if (req.isAuthenticated() && req.user.role === role) {
-return next();
-}
-res.redirect('/auth/login');
-};
+  return (req, res, next) => {
+    if (req.isAuthenticated() && req.user.role === role) {
+      return next();
+    }
+    res.redirect('/auth/login');
+  };
 };
 
 // Student's Home Page
 router.get('/home', isAuthenticated('student'), async (req, res) => {
   const studentName = req.user.username;
-  res.render('student/homePage', {studentName});
+  res.render('student/homePage', { studentName });
 });
 
 // Take test
@@ -33,24 +33,24 @@ router.get('/take-test', isAuthenticated('student'), async (req, res) => {
 
 //route to submit the test answers and evaluate them
 router.post('/submit-test', async (req, res) => {
-  console.log(req.user.username);
-const studentName = req.user.username; // Use the authenticated user's username
-const questionId = req.body.questionId; // array
-const studentAnswers = req.body.answer; // array
-let index = 0; // used to iterate the array
-for (const studentAnswer of studentAnswers) {
-const {question, answer, minScore, maxScore} = await Question.findById(questionId[index]).exec();
+  const studentName = req.user.username; // Use the authenticated user's usernam
+  // const questionId = req.body.questionId; // array
+  const questionId = Array.isArray(req.body.questionId) ? req.body.questionId : [req.body.questionId];
+  const studentAnswers = req.body.answer; // array
 
-const score = await evaluateAnswer(answer, studentAnswer, minScore, maxScore);
+  // let index = 0; // used to iterate the array
+  for (let i = 0; i < questionId.length; i++) {
+    const { question, answer, minScore, maxScore } = await Question.findById(questionId[i]);
+    const score = await evaluateAnswer(answer, studentAnswers[i], minScore, maxScore);
     const newScore = new Score({
       studentName: studentName,
-      questionId: questionId[index],
-      studentAnswer: studentAnswer,
+      questionId: questionId[i],
+      studentAnswer: studentAnswers[i],
       score: score,
     });
     await newScore.save();
-    index++;
-}
+    // index++;
+  }
   res.redirect(`/student/test-submitted?studentName=${studentName}`);
 });
 
